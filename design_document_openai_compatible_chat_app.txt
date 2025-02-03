@@ -1,0 +1,139 @@
+Updated Detailed Design Document for PyQt6 Chat Application
+1. Drop-down Menu for Export/Import Chat History
+Menu Items: The main navigation bar will contain a "File" menu with the following options:
+
+Export Chat History: Allows the user to save the entire chat session as a JSON file.
+Import Chat History: Opens a file dialog to load a previously saved JSON file and restores the chat session in the display area.
+Chat History Structure (JSON Format): The chat history will follow this structure:
+
+json
+Copy
+Edit
+{
+  "chat_log": [
+    ["You", "Hello", "[YYYY-MM-DD HH:MM:SS]"],
+    ["AI", "Hi there!", "[YYYY-MM-DD HH:MM:SS]"]
+  ]
+}
+Each chat entry will contain the sender (User or AI), the message, and the timestamp.
+Code Example (Export Functionality):
+
+python
+Copy
+Edit
+def export_chat_history(chat_log):
+    file_name, _ = QFileDialog.getSaveFileName(None, "Export Chat", "", "JSON Files (*.json)")
+    if file_name:
+        with open(file_name, 'w') as f:
+            json.dump({'chat_log': chat_log}, f, indent=4)
+2. API Configuration Settings
+Menu Item: The "Settings" menu will have an "API Configuration" option.
+
+Popup Form: A dialog box will appear with fields to enter:
+
+API URL
+API Key
+Model (Drop-down with model options)
+System Prompt (Text field)
+Temperature (Slider ranging from 0 to 1)
+Save Button: Saves the configuration to api_configuration.yaml.
+
+If the file is missing or corrupted at startup, an error dialog will prompt the user.
+Code Example (Saving Configuration to YAML):
+
+python
+Copy
+Edit
+def save_api_config(api_url, api_key, model, system_prompt, temperature):
+    config = {
+        'API_Url': api_url,
+        'API_Key': api_key,
+        'Model': model,
+        'System_Prompt': system_prompt,
+        'Temperature': temperature
+    }
+    with open('api_configuration.yaml', 'w') as file:
+        yaml.dump(config, file)
+3. Chat Display Area with WhatsApp-Style Formatting
+Scroll Box: The chat display will be implemented using QTextBrowser, allowing for rich text formatting using HTML and CSS.
+
+Alignment & Styling:
+
+User messages: Right-aligned with a light green background.
+AI responses: Left-aligned with a light blue background.
+File attachments: Appear as a box with the filename and the first 5 lines of the file (light yellow background for differentiation).
+WhatsApp-Style Text Format Example:
+
+html
+Copy
+Edit
+<div style="text-align: right; background-color: lightgreen; padding: 5px; border-radius: 10px;">
+    [2025-01-01 10:30:00] You: Hello!
+</div>
+<div style="text-align: left; background-color: lightblue; padding: 5px; border-radius: 10px;">
+    [2025-01-01 10:30:05] AI: Hi! How can I help?
+</div>
+4. User Input Area and Buttons
+Input Box: A QLineEdit below the chat display for typing user prompts.
+
+Buttons:
+
+"Attach File": Opens a file dialog for the user to select a file. Once a file is selected, the filename and first 5 lines of the file will be displayed in the chat display.
+"Emojis": Opens an emoji picker for the user to select an emoji to include in their message.
+"Send": Submits the user’s input and any attached file to the API for processing.
+File Attachment Behavior:
+
+When a file is attached, it should be handled as part of the user’s message.
+A preview of the file (filename and first 5 lines) will be displayed in the chat window before sending.
+Code Example (File Attachment Handling):
+
+python
+Copy
+Edit
+def attach_file():
+    file_name, _ = QFileDialog.getOpenFileName(None, "Attach File", "", "All Files (*)")
+    if file_name:
+        with open(file_name, 'r') as file:
+            content = file.readlines()[:5]  # Read first 5 lines for preview
+            preview = ''.join(content)
+        display_file_attachment(file_name, preview)
+
+def display_file_attachment(file_name, preview):
+    # Display the filename and preview in the chat
+    chat_browser.append(f"<div style='background-color: lightyellow;'>"
+                        f"<b>Attached File: {file_name}</b><br>{preview}</div>")
+5. Copy-Paste Functionality
+Right-click context menu: Implement right-click context menus in both the chat display and user input areas for easy copy-paste actions.
+Keyboard shortcuts: Enable standard shortcuts like Ctrl+C (copy) and Ctrl+V (paste).
+6. API Interaction
+Data Sent to API:
+
+The user’s text input.
+Any attached file’s content (combined with the user’s message).
+Handling Input and File Together:
+
+Combine the user input and the attached file (if any) into a single API request.
+The file content can be included in the prompt as additional text.
+Code Example (Sending API Request):
+
+python
+Copy
+Edit
+def send_to_api(user_input, attached_file_content=None):
+    prompt = user_input
+    if attached_file_content:
+        prompt += f"\n[File Attached:]\n{attached_file_content}"
+    
+    response = call_openai_api(prompt)
+    display_ai_response(response)
+Visual and Usability Design
+Color Scheme:
+
+User messages: Light green background with rounded corners.
+AI responses: Light blue background with rounded corners.
+File attachments: Light yellow background for clarity and separation.
+Text Highlighting: Ensure clear visual feedback for selected text (e.g., a light gray or blue highlight when selecting text for copy-pasting).
+
+Responsiveness: Ensure the UI remains responsive when the chat window grows large, and handle file attachments efficiently to avoid lag.
+
+This expanded design should provide clear, detailed guidelines to ensure no ambiguity during implementation. The functional behavior of file attachment, API interaction, and visual feedback are all thoroughly described, ensuring the app will provide a smooth, intuitive experience for users.
