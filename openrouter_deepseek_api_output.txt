@@ -1,0 +1,47 @@
+$ python3 sample_openai_compatible_api.py
+Enter base URL (default: https://openrouter.ai/api/v1): 
+Enter your API key: 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
+Enter the model name (default: openai/gpt-3.5-turbo): deepseek/deepseek-r1:free
+Enter the system prompt (e.g., 'You are a helpful assistant'): 
+Enter your question or input for the AI: hello, please tell me who you are, what is your role, what are your capabilities and responsibilities. also, what is the LLM you are using? lastly, tell me an interesting and captivating story with "Chinese  Lunar New Year 2025, Year of the Snake" as the theme.
+Enter the temperature (default: 0.7, range: 0.0 to 1.0): 
+
+
+
+*AI Response*: **👋 About Me**  
+I’m an AI assistant created by *DeepSeek*, designed to *help, inform, and engage*! My role:  
+✅ **Answer questions** (tech, creative, general knowledge)  
+✅ **Solve problems** (coding, math, troubleshooting)  
+✅ **Generate ideas** (stories, poems, brainstorming)  
+✅ **Assist with tasks** (translation, analysis, learning)  
+
+**🛠 Responsibilities**  
+- Ensure accuracy with verified sources  
+- Avoid harmful/unethical content  
+- Respect privacy (no data storage)  
+
+**🧠 LLM Under the Hood**  
+Powered by *DeepSeek-R1* — a cutting-edge LLM trained on massive datasets for:  
+- Natural language understanding  
+- Contextual reasoning  
+- Cross-cultural adaptability  
+
+---  
+**📖 Lunar New Year 2025: The Snake’s Gift 🐍✨**  
+
+In the misty mountains of *Linghua Village*, 12-year-old **Mei** discovered a wounded serpent with jade-green scales. Against her family’s warnings (“Snakes bring bad luck!”), she secretly nursed it back to health. On New Year’s Eve, the village faced disaster: the *River of Prosperity* had frozen solid, blocking trade and trapping everyone.  
+
+That night, the serpent transformed into a **celestial spirit** — *Shenlong*, guardian of the Snake Zodiac. “Your kindness has thawed my heart,” it hissed. “Break the ice with *truth*.”  
+
+Mei rallied the villagers: “The river froze because we’ve ignored its needs — dumping waste, overfishing!” Ashamed, they pledged to restore the river. At midnight, the ice cracked, revealing **golden koi** swimming upstream — a sign of renewed fortune.  
+
+**🐉 The Revelation**  
+Shenlong gifted Mei a scale that glowed like moonlight: “The Snake’s power lies not in venom, but in ***shedding old skins*** — adaptability and wisdom.”  
+
+The next morning, Linghua celebrated with *dragon dances* and **sticky rice cakes shaped like coiled snakes**. Mei’s family hung a new couplet:  
+*”Wisdom flows like the river; renewal springs from the heart.”*  
+
+**🎉 Moral**: The Year of the Snake (2025) reminds us that *true transformation begins with introspection and care for the world around us*.  
+
+---  
+Let me know if you’d like adjustments! 🧧🐍
