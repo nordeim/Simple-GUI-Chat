@@ -1,5 +1,11 @@
 # Simple-GUI-Chat
 a modern simple AI chat application for OpenAI compatible API
+
+$ pip install PyQt6 pyyaml requests
+
+$ python ai_chat_app.py
+
+design document:
 https://chatgpt.com/share/67a0993c-9774-800c-a424-443cbae42ff5
 
 A PyQt6 chat application that
