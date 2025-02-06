@@ -1,4 +1,4 @@
-API_Key: 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
+API_Key: xxx
 API_Url: https://api.openai.com/v1
 Model: gpt-4o-mini
 System_Prompt: 'You are an assistant that engages in extremely thorough, self-questioning
