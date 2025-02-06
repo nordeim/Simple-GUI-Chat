@@ -249,7 +249,7 @@ class AIChatApp(QMainWindow):
         api_key_input = QLineEdit(self.config.get('API_Key', '')if self.config else '')
 
         self.model_combo = QComboBox(self) # Use QComboBox for model selection
-        models = ["gpt-3.5-turbo", "gpt-4", "gpt-3.5-turbo-16k", "gpt-4-32k"] # Common models, extend as needed
+        models = ["gpt-4o-mini", "o3-mini", "deepseek/deepseek-chat", "deepseek/deepseek-r1", "deepseek-reasoner", "deepseek-chat"] # Common models, extend as needed
         self.model_combo.addItems(models)
         current_model = self.config.get('Model', 'gpt-3.5-turbo') if self.config else 'gpt-3.5-turbo'
         self.model_combo.setCurrentText(current_model)
