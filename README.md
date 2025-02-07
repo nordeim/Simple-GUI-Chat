@@ -43,3 +43,6 @@ Copy-Paste Functionality: Implement context menus for copy-paste.
 Styling and Refinements: Apply WhatsApp-style CSS and refine UI elements.
 
 Start by creating the basic structure and then progressively add functionality. I will use PyQt6, PyYAML, requests, and json libraries. I'll make sure to include necessary imports at the beginning of the code and test each part incrementally.
+
+![image](https://github.com/user-attachments/assets/c9f26715-0fb2-4e54-8589-a870eeebfe38)
+
