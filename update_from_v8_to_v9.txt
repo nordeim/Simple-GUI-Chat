@@ -1,0 +1,23 @@
+$ diff ai_chat_app-v9.py ai_chat_app-v8.py
+407c407
+<         timestamp = QDateTime.currentDateTime().toString("[yyyy-MM-dd hh:mm:ss]")
+---
+>         timestamp = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
+506c506
+<             timestamp = QDateTime.currentDateTime().toString("[yyyy-MM-dd hh:mm:ss]")
+---
+>             timestamp = QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")
+519c519
+<                                  QDateTime.currentDateTime().toString("[yyyy-MM-dd hh:mm:ss]"),
+---
+>                                  QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss"),
+522c522
+<                 ["AI", f"Error: {error_message}", QDateTime.currentDateTime().toString("[yyyy-MM-dd hh:mm:ss]")])
+---
+>                 ["AI", f"Error: {error_message}", QDateTime.currentDateTime().toString("yyyy-MM-dd hh:mm:ss")])
+526d525
+<         timestamp_sn = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+536c535
+<                 "session_name": f"Chat {timestamp_sn}",
+---
+>                 "session_name": f"Chat {timestamp}",
