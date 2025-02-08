@@ -3,10 +3,12 @@ a modern simple AI chat application for OpenAI compatible API
 
 $ pip install PyQt6 pyyaml requests
 
-$ python ai_chat_app-v5.py
+$ python ai_chat_app-v9.py
 
 design document:
 https://chatgpt.com/share/67a0993c-9774-800c-a424-443cbae42ff5
+
+![image](https://github.com/user-attachments/assets/9e921b87-9cc7-4441-ad5d-3af4bf13ec28)
 
 A PyQt6 chat application that
 
