@@ -1,0 +1,21 @@
+*Changes and Improvements in the v6 Code:*
+
+1. *Emoji Picker Fix:* Removed self.accept() from EmojiPickerDialog.emoji_selected.
+
+2. *API Initialization:* AIChatApp.__init__ now loads the config and initializes the API if the config is found, or shows a warning if not.
+
+3. *Session Logging:*
+
+    create_session_log: Creates the log file and writes the initial JSON structure.
+
+    write_to_session_log: Appends new chat entries to the log file. This involves reading the existing JSON, appending the new data, and writing the entire updated JSON back to the file. This is crucial for maintaining a valid JSON structure.
+
+    close_session_log: Adds the closing lines to the log file and closes it.
+
+    closeEvent: Ensures close_session_log is called when the application closes.
+
+    Logging calls are added to send_message and call_api.
+
+4. *Directory Creation:* The chat_logs directory is created if it doesn't exist.
+
+5. *Error Handling:* try...except blocks are used in file
