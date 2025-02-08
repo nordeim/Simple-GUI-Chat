@@ -1,0 +1,67 @@
+Okay, I've identified the issue causing the "Could not write to session log file: not readable" error. It's related to how I was handling file I/O for the session log.
+
+The Problem
+
+The error "not readable" arises because after writing the initial JSON data to the log file in create_session_log, the file pointer is left at the end of the file. Then, in write_to_session_log, I attempt to json.load(self.session_log_file) before resetting the file pointer to the beginning. json.load needs to read from the file, but the file pointer is at the end, so there's nothing to read, hence the "not readable" error. The seek(0) calls were in the wrong place.
+
+The Fix
+
+The solution involves rearranging the file operations in write_to_session_log to ensure that we seek to the beginning of the file before attempting to read the JSON data. Also, the initial write in create_session_log and the subsequent writes in write_to_session_log should use the "r+" mode (read and write) to correctly update the file's contents.
+
+Here's the corrected create_session_log and write_to_session_log methods, with explanations:
+
+def create_session_log(self):
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        log_dir = "chat_logs"
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)  # Create the directory if it doesn't exist
+        log_file_path = os.path.join(log_dir, f"Chat_{timestamp}.json")
+
+        try:
+            # Open in 'w' mode initially to create or overwrite
+            self.session_log_file = open(log_file_path, 'w')
+            log_data = {
+                "session_name": f"Chat {timestamp}",
+                "chat_log": []
+            }
+            json.dump(log_data, self.session_log_file, indent=4)  # Write initial structure
+            self.session_log_file.flush()  # Ensure data is written to disk
+            self.session_log_file.close() # close to change to 'r+' mode
+            # Reopen in 'r+' mode for reading and writing
+            self.session_log_file = open(log_file_path, 'r+')
+        except Exception as e:
+            QMessageBox.critical(self, "Logging Error", f"Could not create session log file: {e}")
+            self.session_log_file = None
+
+    def write_to_session_log(self, log_entry):
+        if self.session_log_file:
+            try:
+                # Seek to the beginning *before* reading
+                self.session_log_file.seek(0)
+                data = json.load(self.session_log_file)
+                data['chat_log'].append(log_entry)
+
+                # Seek to the beginning again *before* writing (to overwrite)
+                self.session_log_file.seek(0)
+                self.session_log_file.truncate(0) # Clear the file
+                json.dump(data, self.session_log_file, indent=4)
+                self.session_log_file.flush()
+            except Exception as e:
+                QMessageBox.critical(self, "Logging Error", f"Could not write to session log file: {e}")
+
+Explanation of Changes
+
+create_session_log:
+
+The file is now first opened in "w" (write) mode. This creates the file (or overwrites it if it already exists) and writes the initial JSON structure.
+
+We explicitly close() the file and then reopen it in "r+" mode. This is important. "r+" allows both reading and writing, which is necessary for updating the log.
+
+write_to_session_log:
+
+Crucially, self.session_log_file.seek(0) is called before json.load(self.session_log_file). This moves the file pointer to the beginning, allowing the JSON data to be read.
+
+After appending the new log_entry, self.session_log_file.seek(0) is called again before json.dump(...). This moves the file pointer back to the beginning, so the updated JSON data overwrites the old data.
+
+self.session_log_file.truncate(0) is used to clear the contents before write.
+
